@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 
 import os
+import sys
 import xml.etree.ElementTree
 from ..base import *
 
@@ -28,6 +29,7 @@ youdao_download_mp3 = True
 class Youdao(WebService):
 
     def __init__(self):
+        sys.stderr.write(self.__class__.__name__)
         super(Youdao, self).__init__()
 
     def _get_from_api(self, lang='eng'):

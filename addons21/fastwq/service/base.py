@@ -19,6 +19,7 @@
 
 import inspect
 import os
+import sys
 import random
 # use ntpath module to ensure the windows-style (e.g. '\\LDOCE.css')
 # path can be processed on Unix platform.
@@ -217,6 +218,8 @@ class Service(object):
         self.cache = defaultdict(defaultdict)
         self._unique = self.__class__.__name__
         self._exporters = self._get_exporters()
+        if self.__class__.__name__ == 'Youdao':
+            sys.stderr.write(str(self._exporters))
         self._fields, self._actions = zip(*self._exporters) \
             if self._exporters else (None, None)
         self._word = ''
@@ -285,11 +288,13 @@ class Service(object):
                 label, index = export_attrs[0], export_attrs[1]
                 flds.update({int(index): (label, method[1])})
         sorted_flds = sorted(flds)
+        # key is the index, value is the tuple of (label, function), and they are sorted by index
         return [flds[key] for key in sorted_flds]
 
     def active(self, fld_ord, word):
         self.word = word
         if fld_ord >= 0 and fld_ord < len(self.actions):
+            # call action according to field order
             return self.actions[fld_ord]()
         return QueryResult.default()
 

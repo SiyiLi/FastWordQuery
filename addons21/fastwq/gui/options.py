@@ -253,6 +253,7 @@ class OptionsDialog(Dialog):
         i = len(self.tabs)
         if isinstance(maps, list):
             maps = {'fields': maps, 'name': _('CONFIG_INDEX') % (i + 1)}
+        #sys.stderr.write(str(maps))
         tab = TabContent(self.current_model, maps['fields'] if maps else None,
                          self.dict_services)
         self.tabs.append(tab)
@@ -386,6 +387,7 @@ class TabContent(QScrollArea):
 
         # dict & fields
         self.radio_group = QButtonGroup()
+        #sys.stderr.write(str(model))
         for i, fld in enumerate(model['flds']):
             ord = fld['ord']
             name = fld['name']

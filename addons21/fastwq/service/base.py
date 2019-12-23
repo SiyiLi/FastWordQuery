@@ -555,7 +555,7 @@ class MdxService(LocalService):
     def __init__(self, dict_path):
         super(MdxService, self).__init__(dict_path)
         self.media_cache = defaultdict(set)
-        self.cache = defaultdict(str)
+        self.df_html_cache = defaultdict(str)
         self.html_cache = defaultdict(str)
         self.query_interval = 0.01
         self.word_links = []
@@ -632,10 +632,10 @@ class MdxService(LocalService):
         '''
         default get html from mdx interface
         '''
-        if not self.cache[self.word]:
+        if not self.df_html_cache[self.word]:
             self.word_links = [self.word.upper()]
             self._get_default_html()
-        return self.cache[self.word]
+        return self.df_html_cache[self.word]
 
     def _get_default_html(self):
         html = u''
@@ -649,8 +649,8 @@ class MdxService(LocalService):
                     self.word = word
                     return self._get_default_html()
             html = self.adapt_to_anki(result)
-        self.cache[self.word] = html
-        return self.cache[self.word]
+        self.df_html_cache[self.word] = html
+        return self.df_html_cache[self.word]
 
     def adapt_to_anki(self, html):
         """

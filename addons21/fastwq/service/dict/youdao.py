@@ -109,6 +109,18 @@ class Youdao(WebService):
         except:
             return ''
 
+    def _get_singledict_louis(self, single_dict, lang='eng'):
+        url = u"http://m.youdao.com/singledict?q={0}&dict={1}&le={2}&more=false".format(
+            self.quote_word,
+            single_dict,
+            lang
+        )
+        try:
+            result = self.get_response(url, timeout=5)
+            return result
+        except:
+            return ''
+
     @export('BRE_PRON')
     def fld_british_audio(self):
         audio_url = u'http://dict.youdao.com/dictvoice?audio={}&type=1'.format(self.quote_word)
@@ -158,7 +170,35 @@ class Youdao(WebService):
     def fld_blng_sents_part(self):
         return self._get_singledict('blng_sents_part')
 
-    @export([u'原生例句', u''])
+    @export([u'中文例句', u'Chinese examples'])
+    def fld_chinese_examples(self):
+        data = self._get_singledict_louis('blng_sents_part')
+        soup = parse_html(data)
+        elements = soup.find_all('div', class_='col2')
+        result = u''
+        index = 1
+        for e in elements:
+            e = e.find('p', class_='grey')
+            content = u''.join(str(c) for c in e.contents)
+            result = result + u'({0}) {1}{2}'.format(index, content, '<br>')
+            index = index + 1
+        return result
+
+    @export([u'英文例句', u'English examples'])
+    def fld_english_examples(self):
+        data = self._get_singledict_louis('blng_sents_part')
+        soup = parse_html(data)
+        elements = soup.find_all('div', class_='col2')
+        result = u''
+        index = 1
+        for e in elements:
+            e = e.find('p')
+            content = u''.join(str(c) for c in e.contents)
+            result = result + u'({0}) {1}{2}'.format(index, content, '<br>')
+            index = index + 1
+        return result
+
+    @export([u'原声例句', u'Original sound examples'])
     def fld_media_sents_part(self):
         return self._get_singledict('media_sents_part')
 

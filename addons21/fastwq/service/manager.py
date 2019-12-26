@@ -19,6 +19,7 @@
 
 import inspect
 import os
+import platform
 from hashlib import md5
 
 from .base import LocalService, MdxService, StardictService, WebService, service_wrap
@@ -105,7 +106,8 @@ class ServiceManager(object):
         '''
         mdx_services = list()
         star_dict_services = list()
-        for each in config.dirs:
+        config_dirs = config.win_dirs if platform.system() == 'windows' else config.mac_dirs
+        for each in config_dirs:
             for dirpath, dirnames, filenames in os.walk(each):
                 for filename in filenames:
                     service = None

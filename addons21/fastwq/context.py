@@ -92,8 +92,12 @@ class Config(object):
         return self.data.get('%s_last' % self.pmname, 0)
 
     @property
-    def dirs(self):
-        return self.data.get('dirs', list())
+    def mac_dirs(self):
+        return self.data.get('mac_dirs', list())
+
+    @property
+    def win_dirs(self):
+        return self.data.get('win_dirs', list())
 
     @property
     def dicts(self):

@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import platform
 from aqt.qt import *
 
 from ..context import config
@@ -46,7 +47,11 @@ class FoldersManageDialog(Dialog):
         add_btn.clicked.connect(self.add_folder)
         remove_btn.clicked.connect(self.remove_folder)
         self.folders_lst = QListWidget()
-        self.folders_lst.addItems(config.dirs)
+        self.sysstr = platform.system()
+        if self.sysstr == 'windows':
+            self.folders_lst.addItems(config.win_dirs)
+        else:
+            self.folders_lst.addItems(config.mac_dirs)
         self.chk_use_filename = QCheckBox(_('CHECK_FILENAME_LABEL'))
         self.chk_export_media = QCheckBox(_('EXPORT_MEDIA'))
         self.chk_use_filename.setChecked(config.use_filename)
@@ -91,8 +96,9 @@ class FoldersManageDialog(Dialog):
 
     def save(self):
         '''save config to file'''
+        dirs_key = 'win_dirs' if self.sysstr == 'windows' else 'mac_dirs'
         data = {
-            'dirs': self.dirs,
+            dirs_key: self.dirs,
             'use_filename': self.chk_use_filename.isChecked(),
             'export_media': self.chk_export_media.isChecked()
         }

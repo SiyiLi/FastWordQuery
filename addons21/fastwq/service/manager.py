@@ -106,7 +106,7 @@ class ServiceManager(object):
         '''
         mdx_services = list()
         star_dict_services = list()
-        config_dirs = config.win_dirs if platform.system() == 'windows' else config.mac_dirs
+        config_dirs = config.win_dirs if platform.system() == 'Windows' else config.mac_dirs
         for each in config_dirs:
             for dirpath, dirnames, filenames in os.walk(each):
                 for filename in filenames:

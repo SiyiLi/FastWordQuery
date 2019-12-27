@@ -48,7 +48,7 @@ class FoldersManageDialog(Dialog):
         remove_btn.clicked.connect(self.remove_folder)
         self.folders_lst = QListWidget()
         self.sysstr = platform.system()
-        if self.sysstr == 'windows':
+        if self.sysstr == 'Windows':
             self.folders_lst.addItems(config.win_dirs)
         else:
             self.folders_lst.addItems(config.mac_dirs)
@@ -96,7 +96,7 @@ class FoldersManageDialog(Dialog):
 
     def save(self):
         '''save config to file'''
-        dirs_key = 'win_dirs' if self.sysstr == 'windows' else 'mac_dirs'
+        dirs_key = 'win_dirs' if self.sysstr == 'Windows' else 'mac_dirs'
         data = {
             dirs_key: self.dirs,
             'use_filename': self.chk_use_filename.isChecked(),

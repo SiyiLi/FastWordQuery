@@ -157,4 +157,9 @@ class Config(object):
         return tmpstr
 
 
+wp = mw.pm.profileFolder()
+mediaPath = os.path.join(wp, "collection.media")
+print('Media folder path:', mediaPath)
+# A bit hacky here
+os.chdir(mediaPath)
 config = Config(mw)

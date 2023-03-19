@@ -23,7 +23,7 @@ import anki
 import aqt
 import aqt.models
 import sip
-from anki.utils import isMac
+from anki.utils import is_mac
 from aqt import mw
 from aqt.qt import *
 from aqt.studydeck import StudyDeck
@@ -135,7 +135,7 @@ class OptionsDialog(Dialog):
         tab_add_button = QToolButton(self)
         tab_add_button.setIcon(get_icon('add.png'))
         tab_set_button = QToolButton(self)
-        if isMac and sys.hexversion < 0x03000000:
+        if is_mac and sys.hexversion < 0x03000000:
             tab_set_button.setMaximumSize(20, 20)
             tab_add_button.setMaximumSize(20, 20)
         tab_set_button.setIcon(get_icon('setting.png'))
@@ -273,7 +273,7 @@ class OptionsDialog(Dialog):
         #    self.tab_widget.setTabText(k, _('CONFIG_INDEX') % (k+1))
 
     def changedTab(self, i):
-        if not isMac or sys.hexversion >= 0x03000000:
+        if not is_mac or sys.hexversion >= 0x03000000:
             # restore
             for k in range(0, len(self.tabs)):
                 self.tab_widget.setTabIcon(k, self._NULL_ICON)

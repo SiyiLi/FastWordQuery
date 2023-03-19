@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import platform
 from aqt.qt import *
+from anki.utils import is_mac
 
 from ..context import config
 from ..lang import _, _sl
@@ -47,11 +47,10 @@ class FoldersManageDialog(Dialog):
         add_btn.clicked.connect(self.add_folder)
         remove_btn.clicked.connect(self.remove_folder)
         self.folders_lst = QListWidget()
-        self.sysstr = platform.system()
-        if self.sysstr == 'Windows':
-            self.folders_lst.addItems(config.win_dirs)
-        else:
+        if is_mac:
             self.folders_lst.addItems(config.mac_dirs)
+        else:
+            self.folders_lst.addItems(config.win_dirs)
         self.chk_use_filename = QCheckBox(_('CHECK_FILENAME_LABEL'))
         self.chk_export_media = QCheckBox(_('EXPORT_MEDIA'))
         self.chk_use_filename.setChecked(config.use_filename)

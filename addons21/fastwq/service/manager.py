@@ -19,9 +19,9 @@
 
 import inspect
 import os
-import platform
 from hashlib import md5
 
+from anki.utils import is_mac
 from .base import LocalService, MdxService, StardictService, WebService, service_wrap
 from ..context import config
 from ..utils import importlib
@@ -106,7 +106,7 @@ class ServiceManager(object):
         '''
         mdx_services = list()
         star_dict_services = list()
-        config_dirs = config.win_dirs if platform.system() == 'Windows' else config.mac_dirs
+        config_dirs = config.mac_dirs if is_mac else config.win_dirs
         for each in config_dirs:
             for dirpath, dirnames, filenames in os.walk(each):
                 for filename in filenames:

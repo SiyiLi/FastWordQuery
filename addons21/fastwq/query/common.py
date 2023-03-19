@@ -52,7 +52,7 @@ def inspect_note(note):
     return maps: dicts map of current note
     """
 
-    conf = config.get_maps(note.model()['id'])
+    conf = config.get_maps(note.note_type()['id'])
     maps_list = {'list': [conf], 'def': 0} if isinstance(conf, list) else conf
     maps = maps_list['list'][maps_list['def']]
     maps = maps if isinstance(maps, list) else maps['fields']
@@ -147,7 +147,7 @@ def add_to_tmpl(note, **kwargs):
         u'afmt': u'{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}\n\n{{12}}\n\n{{44}}\n\n', u'ord': 0, u'bqfmt': u''}]
     '''
     # showInfo(str(kwargs))
-    afmt = note.model()['tmpls'][0]['afmt']
+    afmt = note.note_type()['tmpls'][0]['afmt']
     if kwargs:
         jsfile, js = kwargs.get('jsfile', None), kwargs.get('js', None)
         if js and js.strip():
@@ -174,7 +174,7 @@ def add_to_tmpl(note, **kwargs):
 </script>'''.format(fn)
                 if addings not in afmt:
                     afmt += addings
-        note.model()['tmpls'][0]['afmt'] = afmt
+        note.note_type()['tmpls'][0]['afmt'] = afmt
 
 
 def query_flds(note, fileds=None):

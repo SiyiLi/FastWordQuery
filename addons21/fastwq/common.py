@@ -86,8 +86,8 @@ def browser_menu():
             def _show_options():
                 model_id = -1
                 for note_id in browser.selectedNotes():
-                    note = browser.mw.col.getNote(note_id)
-                    model_id = note.model()['id']
+                    note = browser.mw.col.get_note(note_id)
+                    model_id = note.note_type()['id']
                     break
                 show_options(browser, model_id)
 
@@ -161,7 +161,7 @@ def customize_addcards():
                         lambda: query_from_editor_fields(self.editor),
                         QKeySequence(my_shortcut))
                     # default options
-                    mid = self.editor.note.model()['id']
+                    mid = self.editor.note.note_type()['id']
                     conf = config.get_maps(mid)
                     conf = {
                         'list': [conf],
@@ -209,7 +209,7 @@ def context_menu():
         """
         if not isinstance(web_view.editor.currentField, int):
             return
-        current_model_id = web_view.editor.note.model()['id']
+        current_model_id = web_view.editor.note.note_type()['id']
         conf = config.get_maps(current_model_id)
         maps_list = conf if isinstance(conf, list) else conf['list']
         curr_flds = []
@@ -258,6 +258,6 @@ def context_menu():
                 submenu.addAction(
                     c['name'], lambda i=c['def']: query_from_editor_hook(i))
             submenu.addSeparator()
-        submenu.addAction(_("OPTIONS"), lambda: show_options(web_view, web_view.editor.note.model()['id']))
+        submenu.addAction(_("OPTIONS"), lambda: show_options(web_view, web_view.editor.note.note_type()['id']))
 
     addHook('EditorWebView.contextMenuEvent', on_setup_menus)

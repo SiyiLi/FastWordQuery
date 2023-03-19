@@ -48,7 +48,7 @@ def query_from_browser(browser):
     if not browser:
         return
 
-    notes = [browser.mw.col.getNote(note_id)
+    notes = [browser.mw.col.get_note(note_id)
              for note_id in browser.selectedNotes()]
 
     if len(notes) == 1:
@@ -80,7 +80,7 @@ def query_from_editor_fields(editor, fields=None):
         tooltip(_('PLS_SET_DICTIONARY_FIELDS'))
         show_options(
             editor.parentWindow,
-            editor.note.model()['id'],
+            editor.note.note_type()['id'],
             query_from_editor_fields,
             editor,
             fields

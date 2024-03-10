@@ -95,7 +95,7 @@ class FoldersManageDialog(Dialog):
 
     def save(self):
         '''save config to file'''
-        dirs_key = 'win_dirs' if self.sysstr == 'Windows' else 'mac_dirs'
+        dirs_key = 'mac_dirs' if is_mac else 'win_dirs'
         data = {
             dirs_key: self.dirs,
             'use_filename': self.chk_use_filename.isChecked(),

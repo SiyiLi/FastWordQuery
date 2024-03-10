@@ -26,6 +26,8 @@ class Collins(MdxService):
 
     def _get_from_api(self):
         html = self.get_default_html()
+        # Uncomment below to debug collins issues
+        # print(html)
         soup = parse_html(html)
         result = {
             'stars': '',
@@ -33,17 +35,21 @@ class Collins(MdxService):
         }
 
         try:
+            # Make sure 'text' & 'header' are not referenced before assignment
+            text = ''
             stars = soup.find('span', {'class':'C1_word_header_star'})
             if stars:
                 text = u''.join(stars.text)
             result['stars'] = text
 
+            header = ''
             header = soup.find('div', {'class':'C1_word_header'})
+
             if header:
                 header.replace_with('')
             result['explanation'] = u''.join(str(soup))
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
         return self.cache_this(result)
 

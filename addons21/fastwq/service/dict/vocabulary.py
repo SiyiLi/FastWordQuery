@@ -11,7 +11,9 @@ class Vocabulary(WebService):
 
     def _get_from_api(self):
         data = self.get_response(u'https://www.vocabulary.com/dictionary/{}'.format(self.quote_word))
-        soup = parse_html(data)
+        # Uncomment below to debug collins issues
+        # print(data)
+        soup = parse_html(data.decode('utf-8') )
         result = {
             'short': u'',
             'long': u'',
